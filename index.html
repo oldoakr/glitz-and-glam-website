@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glitz & Glam Beauty Parlour - Bangalore</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>✨ Glitz & Glam</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#booking">Book Now</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Glitz & Glam</h1>
+            <p>Your Beauty, Our Passion</p>
+            <p class="tagline">Premium Beauty Services in Bangalore</p>
+            <a href="#booking" class="cta-button">Book Appointment</a>
+            <a href="tel:8088490262" class="cta-button secondary">Call Now</a>
+        </div>
+    </section>
+
+    <!-- Service Categories -->
+    <section class="service-categories">
+        <div class="container">
+            <h2 class="section-title">What service do you need?</h2>
+            <div class="categories-grid">
+                <div class="category-card" onclick="showCategory('waxing')">
+                    <div class="category-icon">🧖‍♀️</div>
+                    <h3>Waxing</h3>
+                </div>
+                <div class="category-card" onclick="showCategory('facial')">
+                    <div class="category-icon">✨</div>
+                    <h3>Facial</h3>
+                </div>
+                <div class="category-card" onclick="showCategory('cleanup')">
+                    <div class="category-icon">💆‍♀️</div>
+                    <h3>Clean Up</h3>
+                </div>
+                <div class="category-card" onclick="showCategory('manipedi')">
+                    <div class="category-icon">💅</div>
+                    <h3>Mani Pedi</h3>
+                </div>
+                <div class="category-card" onclick="showCategory('threading')">
+                    <div class="category-icon">👁️</div>
+                    <h3>Threading & Face Wax</h3>
+                </div>
+                <div class="category-card" onclick="showCategory('detan')">
+                    <div class="category-icon">☀️</div>
+                    <h3>Detan & Bleach</h3>
+                </div>
+                <div class="category-card" onclick="showCategory('massage')">
+                    <div class="category-icon">💆</div>
+                    <h3>Head Massage</h3>
+                </div>
+                <div class="category-card" onclick="showCategory('makeup')">
+                    <div class="category-icon">💄</div>
+                    <h3>Makeup</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            
+            <!-- Waxing Services -->
+            <div class="service-category" id="waxing">
+                <h3 class="category-title">Waxing</h3>
+                <div class="services-grid">
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <img src="https://images.pexels.com/photos/5069453/pexels-photo-5069453.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Arms Waxing">
+                        </div>
+                        <div class="service-details">
+                            <h4>Full Arms + Underarms Waxing</h4>
+                            <div class="service-rating">⭐ 4.6 (73 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹500</span>
+                            </div>
+                            <div class="service-duration">⏱️ 45 mins</div>
+                            <p class="service-desc">Skin prepped with soft or hard wax for effective hair removal. RICA WAX or Roll-On</p>
+                            <button class="add-button" onclick="addToCart('Full Arms + Underarms Waxing', 399)">Book Now</button>
+                        </div>
+                    </div>
+
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">🦵</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Full Legs Waxing</h4>
+                            <div class="service-rating">⭐ 4.4 (120 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹600</span>
+                            </div>
+                            <div class="service-duration">⏱️ 45 mins</div>
+                            <p class="service-desc">Removes hair from thighs to ankles using RICA soft wax or roll-on</p>
+                            <button class="add-button" onclick="addToCart('Full Legs Waxing', 599)">Book Now</button>
+                        </div>
+                    </div>
+
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">💁‍♀️</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Full Body Waxing</h4>
+                            <div class="service-rating">⭐ 4.5 (124 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹1,500</span>
+                            </div>
+                            <div class="service-duration">⏱️ 1 hr 30 mins</div>
+                            <p class="service-desc">Removes hair from arms, legs, underarms, back, stomach & bikini line</p>
+                            <button class="add-button" onclick="addToCart('Full Body Waxing', 1499)">Book Now</button>
+                        </div>
+                    </div>
+
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">🤚</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Half Hands Waxing</h4>
+                            <div class="service-rating">⭐ 4.6 (110 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹400</span>
+                            </div>
+                            <div class="service-duration">⏱️ 20 mins</div>
+                            <p class="service-desc">Removes hair from upper arms or forearms using RICA wax</p>
+                            <button class="add-button" onclick="addToCart('Half Hands Waxing', 299)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Facial Services -->
+            <div class="service-category" id="facial">
+                <h3 class="category-title">Facial</h3>
+                <div class="services-grid">
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">✨</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Gold Facial</h4>
+                            <div class="service-rating">⭐ 4.6 (77 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹1,500</span>
+                            </div>
+                            <div class="service-duration">⏱️ 60 mins</div>
+                            <p class="service-desc">Deeply hydrates and restores dry, dull skin with luxury gold treatment</p>
+                            <button class="add-button" onclick="addToCart('Gold Facial', 999)">Book Now</button>
+                        </div>
+                    </div>
+
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">💎</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Diamond Facial</h4>
+                            <div class="service-rating">⭐ 4.6 (77 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹1,800</span>
+                            </div>
+                            <div class="service-duration">⏱️ 60 mins</div>
+                            <p class="service-desc">Reduces wrinkles, fine lines, and sagging. Boosts collagen production</p>
+                            <button class="add-button" onclick="addToCart('Diamond Facial', 1799)">Book Now</button>
+                        </div>
+                    </div>
+
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">🌟</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Skin Brightening Facial</h4>
+                            <div class="service-rating">⭐ 4.5 (72 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹600</span>
+                            </div>
+                            <div class="service-duration">⏱️ 1 hr 10 mins</div>
+                            <p class="service-desc">Deeply cleanses, hydrates, and leaves skin glowing and even-toned</p>
+                            <button class="add-button" onclick="addToCart('Skin Brightening Facial', 1999)">Book Now</button>
+                        </div>
+                    </div>
+
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">🌸</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Korean Glass Facial</h4>
+                            <div class="service-rating">⭐ 4.5 (73 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹2,000</span>
+                            </div>
+                            <div class="service-duration">⏱️ 1 hr 20 mins</div>
+                            <p class="service-desc">Deeply hydrates and brightens skin for radiant glass-skin glow</p>
+                            <button class="add-button" onclick="addToCart('Korean Glass Facial', 1899)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mani Pedi Services -->
+            <div class="service-category" id="manipedi">
+                <h3 class="category-title">Mani Pedi</h3>
+                <div class="services-grid">
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">💅</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Classic Manicure</h4>
+                            <div class="service-rating">⭐ 4.6 (107 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹500</span>
+                            </div>
+                            <div class="service-duration">⏱️ 30 mins</div>
+                            <p class="service-desc">Exfoliates, hydrates, and nourishes hands with premium products</p>
+                            <button class="add-button" onclick="addToCart('Classic Manicure', 799)">Book Now</button>
+                        </div>
+                    </div>
+
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">🦶</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Classic Pedicure</h4>
+                            <div class="service-rating">⭐ 4.7 (79 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹750</span>
+                            </div>
+                            <div class="service-duration">⏱️ 30 mins</div>
+                            <p class="service-desc">Detoxifies, exfoliates, and hydrates feet removing tan</p>
+                            <button class="add-button" onclick="addToCart('Classic Pedicure', 799)">Book Now</button>
+                        </div>
+                    </div>
+
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">💅✨</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Spa Manicure</h4>
+                            <div class="service-rating">⭐ 4.5 (73 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹800</span>
+                            </div>
+                            <div class="service-duration">⏱️ 60 mins</div>
+                            <p class="service-desc">Deeply cleanses, hydrates, and brightens hands</p>
+                            <button class="add-button" onclick="addToCart('Spa Manicure', 1199)">Book Now</button>
+                        </div>
+                    </div>
+
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">🦶✨</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Spa Pedicure</h4>
+                            <div class="service-rating">⭐ 4.5 (74 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹1,000</span>
+                            </div>
+                            <div class="service-duration">⏱️ 60 mins</div>
+                            <p class="service-desc">Deeply cleanses, exfoliates, and hydrates feet with spa treatment</p>
+                            <button class="add-button" onclick="addToCart('Spa Pedicure', 1399)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Threading & Face Wax -->
+            <div class="service-category" id="threading">
+                <h3 class="category-title">Threading & Face Wax</h3>
+                <div class="services-grid">
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">👁️</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Eyebrow Threading</h4>
+                            <div class="service-rating">⭐ 4.7 (112 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹50</span>
+                            </div>
+                            <div class="service-duration">⏱️ 10 mins</div>
+                            <p class="service-desc">Clean, sharp eyebrow shape. Safe and gentle for sensitive skin</p>
+                            <button class="add-button" onclick="addToCart('Eyebrow Threading', 49)">Book Now</button>
+                        </div>
+                    </div>
+
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">😊</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Face Waxing</h4>
+                            <div class="service-rating">⭐ 4.5 (108 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹450</span>
+                            </div>
+                            <div class="service-duration">⏱️ 10 mins</div>
+                            <p class="service-desc">Removes facial hair from lip, chin, cheeks & forehead</p>
+                            <button class="add-button" onclick="addToCart('Face Waxing', 69)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Services -->
+            <div class="service-category" id="detan">
+                <h3 class="category-title">Detan & Bleach</h3>
+                <div class="services-grid">
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">☀️</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Face Detan</h4>
+                            <div class="service-rating">⭐ 4.6 (125 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹250</span>
+                            </div>
+                            <div class="service-duration">⏱️ 20 mins</div>
+                            <p class="service-desc">Removes tan and restores natural skin tone</p>
+                            <button class="add-button" onclick="addToCart('Face Detan', 499)">Book Now</button>
+                        </div>
+                    </div>
+
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">🌟</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Face Bleach</h4>
+                            <div class="service-rating">⭐ 4.5 (122 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹200</span>
+                            </div>
+                            <div class="service-duration">⏱️ 20 mins</div>
+                            <p class="service-desc">Lightens facial hair for brighter, even skin tone</p>
+                            <button class="add-button" onclick="addToCart('Face Bleach', 449)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-category" id="massage">
+                <h3 class="category-title">Head Massage</h3>
+                <div class="services-grid">
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">💆</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Relaxing Head Massage</h4>
+                            <div class="service-rating">⭐ 4.5 (111 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹400</span>
+                            </div>
+                            <div class="service-duration">⏱️ 20 mins</div>
+                            <p class="service-desc">Relieves stress, improves scalp circulation, and relaxes the mind</p>
+                            <button class="add-button" onclick="addToCart('Head Massage', 199)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-category" id="makeup">
+                <h3 class="category-title">Makeup Services</h3>
+                <div class="services-grid">
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">💄</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Party Makeup</h4>
+                            <div class="service-rating">⭐ 4.7 (95 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹2,000</span>
+                            </div>
+                            <div class="service-duration">⏱️ 1 hr</div>
+                            <p class="service-desc">Glamorous makeup for parties and special occasions</p>
+                            <button class="add-button" onclick="addToCart('Party Makeup', 2499)">Book Now</button>
+                        </div>
+                    </div>
+
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">👰</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Bridal Makeup</h4>
+                            <div class="service-rating">⭐ 4.8 (156 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹4,000</span>
+                            </div>
+                            <div class="service-duration">⏱️ 2 hrs</div>
+                            <p class="service-desc">Complete bridal makeup with HD finish and hair styling</p>
+                            <button class="add-button" onclick="addToCart('Bridal Makeup', 8999)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-category" id="cleanup">
+                <h3 class="category-title">Clean Up</h3>
+                <div class="services-grid">
+                    <div class="service-card-new">
+                        <div class="service-image">
+                            <div class="placeholder-img">🌿</div>
+                        </div>
+                        <div class="service-details">
+                            <h4>Organic Clean-Up</h4>
+                            <div class="service-rating">⭐ 4.7 (115 reviews)</div>
+                            <div class="service-price">
+                                <span class="current-price">₹600</span>
+                            </div>
+                            <div class="service-duration">⏱️ 40 mins</div>
+                            <p class="service-desc">Quick effective skin clean-up with organic, chemical-free products</p>
+                            <button class="add-button" onclick="addToCart('Organic Clean-Up', 849)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews Section -->
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <h2 class="section-title">Customer Reviews</h2>
+            <div class="rating-summary">
+                <div class="rating-number">
+                    <span class="big-rating">4.6</span>
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>Based on 3054 reviews</p>
+                </div>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-initial">P</div>
+                            <div>
+                                <h4>Priya Sharma</h4>
+                                <p class="location">Jayanagar, Bangalore</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">⭐ 5</div>
+                    </div>
+                    <p class="review-text">"Excellent service! The beautician was very professional and the facial left my skin glowing. Will definitely book again!"</p>
+                    <p class="review-date">December 2025</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-initial">A</div>
+                            <div>
+                                <h4>Ananya Reddy</h4>
+                                <p class="location">Koramangala, Bangalore</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">⭐ 5</div>
+                    </div>
+                    <p class="review-text">"Best bridal makeup experience! The team was punctual, professional, and made me look absolutely stunning on my special day."</p>
+                    <p class="review-date">November 2025</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-initial">S</div>
+                            <div>
+                                <h4>Sneha Patel</h4>
+                                <p class="location">Indiranagar, Bangalore</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">⭐ 4</div>
+                    </div>
+                    <p class="review-text">"Great waxing service at home. Very convenient and the beautician was very gentle and professional."</p>
+                    <p class="review-date">December 2025</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-initial">M</div>
+                            <div>
+                                <h4>Meera Kumar</h4>
+                                <p class="location">Whitefield, Bangalore</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">⭐ 5</div>
+                    </div>
+                    <p class="review-text">"The head massage was so relaxing! Perfect way to destress after a long week. Highly recommend Glitz & Glam!"</p>
+                    <p class="review-date">December 2025</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-initial">D</div>
+                            <div>
+                                <h4>Divya Iyer</h4>
+                                <p class="location">HSR Layout, Bangalore</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">⭐ 5</div>
+                    </div>
+                    <p class="review-text">"Love the Korean Glass Facial! My skin has never looked better. The glow lasted for days!"</p>
+                    <p class="review-date">November 2025</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-initial">R</div>
+                            <div>
+                                <h4>Riya Joshi</h4>
+                                <p class="location">BTM Layout, Bangalore</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">⭐ 4</div>
+                    </div>
+                    <p class="review-text">"Good manicure and pedicure service. Affordable prices and quality products used. Very satisfied!"</p>
+                    <p class="review-date">December 2025</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>What services does the salon offer?</h4>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We offer a comprehensive range of beauty services including waxing, facials, makeup, manicure, pedicure, threading, detan, bleach, head massage, and specialized treatments like Korean Glass Facial and bridal makeup.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>How can I book an appointment?</h4>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can book an appointment by filling out our booking form on this website, calling us at 8088490262, or visiting our salon at Shop no 7, Amba Bhavani Temple Rd, Shamarajapura, Bengaluru.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>What are your operating hours?</h4>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We are open Monday to Sunday from 10:30 AM to 8:00 PM. We recommend booking in advance to secure your preferred time slot.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>What brands of products do you use?</h4>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We use premium brands like RICA for waxing, professional facial products, and organic skincare items. All our products are carefully selected to ensure the best results for your skin.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>What if I need to cancel my appointment?</h4>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Please call us at least 2 hours in advance if you need to cancel or reschedule your appointment. We appreciate your consideration as it helps us serve other customers.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Are your services safe and hygienic?</h4>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! We follow strict hygiene protocols, use disposable items where applicable, sanitize all tools and equipment, and maintain high cleanliness standards throughout our salon.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Do you offer bridal packages?</h4>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! We offer complete bridal packages including pre-bridal treatments, bridal makeup, hair styling, and mehendi. Contact us for customized bridal packages tailored to your needs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2 class="section-title">Our Work</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="placeholder-image">
+                        <i class="fas fa-image"></i>
+                        <p>Gallery Image 1</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder-image">
+                        <i class="fas fa-image"></i>
+                        <p>Gallery Image 2</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder-image">
+                        <i class="fas fa-image"></i>
+                        <p>Gallery Image 3</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder-image">
+                        <i class="fas fa-image"></i>
+                        <p>Gallery Image 4</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder-image">
+                        <i class="fas fa-image"></i>
+                        <p>Gallery Image 5</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder-image">
+                        <i class="fas fa-image"></i>
+                        <p>Gallery Image 6</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="booking">
+        <div class="container">
+            <h2 class="section-title">Book Your Appointment</h2>
+            <div class="booking-container">
+                <form class="booking-form" id="bookingForm">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Select Service *</label>
+                        <select id="service" name="service" required>
+                            <option value="">Choose a service</option>
+                            <option value="haircut">Haircut</option>
+                            <option value="facial">Facial</option>
+                            <option value="makeup">Makeup</option>
+                            <option value="waxing">Waxing</option>
+                            <option value="threading">Threading</option>
+                            <option value="spa">Spa</option>
+                            <option value="manicure">Manicure/Pedicure</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Preferred Date *</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Preferred Time *</label>
+                        <select id="time" name="time" required>
+                            <option value="">Choose a time</option>
+                            <option value="10:30">10:30 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="11:30">11:30 AM</option>
+                            <option value="12:00">12:00 PM</option>
+                            <option value="12:30">12:30 PM</option>
+                            <option value="13:00">1:00 PM</option>
+                            <option value="13:30">1:30 PM</option>
+                            <option value="14:00">2:00 PM</option>
+                            <option value="14:30">2:30 PM</option>
+                            <option value="15:00">3:00 PM</option>
+                            <option value="15:30">3:30 PM</option>
+                            <option value="16:00">4:00 PM</option>
+                            <option value="16:30">4:30 PM</option>
+                            <option value="17:00">5:00 PM</option>
+                            <option value="17:30">5:30 PM</option>
+                            <option value="18:00">6:00 PM</option>
+                            <option value="18:30">6:30 PM</option>
+                            <option value="19:00">7:00 PM</option>
+                            <option value="19:30">7:30 PM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Special Requests</label>
+                        <textarea id="message" name="message" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Book Appointment</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Address</h3>
+                            <p>Shop no 7, Amba Bhavani Temple Rd<br>
+                            Near Sambhram College<br>
+                            Shamarajapura, Bengaluru<br>
+                            Karnataka 560064</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Phone</h3>
+                            <p><a href="tel:8088490262">8088490262</a></p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Working Hours</h3>
+                            <p>Monday - Sunday<br>10:30 AM - 8:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.8746741896186!2d77.5947!3d12.9847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDU5JzA1LjAiTiA3N8KwMzUnNDEuMCJF!5e0!3m2!1sen!2sin!4v1234567890"
+                        width="100%" 
+                        height="300" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Glitz & Glam Beauty Parlour. All rights reserved.</p>
+            <p>Made with ❤️ in Bangalore</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
