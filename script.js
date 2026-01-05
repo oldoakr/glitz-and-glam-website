@@ -1,19 +1,24 @@
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+
 // Mobile Navigation Toggle
 const burger = document.querySelector('.burger');
 const nav = document.querySelector('.nav-links');
 
-burger.addEventListener('click', () => {
-    nav.classList.toggle('active');
-    
-    // Burger Animation
-    burger.classList.toggle('toggle');
-});
+if (burger && nav) {
+    burger.addEventListener('click', () => {
+        nav.classList.toggle('active');
+        
+        // Burger Animation
+        burger.classList.toggle('toggle');
+    });
+}
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
-        nav.classList.remove('active');
-        burger.classList.remove('toggle');
+        if (nav) nav.classList.remove('active');
+        if (burger) burger.classList.remove('toggle');
     });
 });
 
@@ -161,3 +166,5 @@ function toggleFAQ(element) {
         faqItem.classList.add('active');
     }
 }
+
+}); // End of DOMContentLoaded
