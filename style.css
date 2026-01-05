@@ -144,6 +144,13 @@ body {
 .cta-button.secondary {
     background: #ffd700;
     color: #333;
+    border: 2px solid #ffd700;
+}
+
+.cta-button.secondary:hover {
+    background: white;
+    color: #ffd700;
+    border: 2px solid #ffd700;
 }
 
 /* Service Categories Section */
