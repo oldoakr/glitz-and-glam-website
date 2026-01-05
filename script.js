@@ -162,7 +162,9 @@ I would like to book this service. Please confirm availability.
 
 // Toggle FAQ
 function toggleFAQ(element) {
+    console.log('FAQ clicked', element);
     const faqItem = element.parentElement;
+    console.log('FAQ item:', faqItem);
     const wasActive = faqItem.classList.contains('active');
     
     // Close all FAQ items
@@ -173,5 +175,8 @@ function toggleFAQ(element) {
     // Open clicked item if it wasn't active
     if (!wasActive) {
         faqItem.classList.add('active');
+        console.log('FAQ opened');
+    } else {
+        console.log('FAQ closed');
     }
 }
