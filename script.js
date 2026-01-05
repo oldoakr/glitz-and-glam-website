@@ -126,6 +126,11 @@ document.querySelectorAll('.service-card, .gallery-item').forEach(el => {
     observer.observe(el);
 });
 
+}
+
+}); // End of DOMContentLoaded
+
+// Global functions for inline onclick handlers
 // Show specific service category
 function showCategory(categoryId) {
     const categoryElement = document.getElementById(categoryId);
@@ -170,5 +175,3 @@ function toggleFAQ(element) {
         faqItem.classList.add('active');
     }
 }
-
-}); // End of DOMContentLoaded
