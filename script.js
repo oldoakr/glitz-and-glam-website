@@ -134,6 +134,7 @@ document.querySelectorAll('.service-card, .gallery-item').forEach(el => {
 document.addEventListener('click', function(e) {
     const faqQuestion = e.target.closest('.faq-question');
     if (faqQuestion) {
+        console.log('FAQ question clicked via event delegation');
         const faqItem = faqQuestion.parentElement;
         const wasActive = faqItem.classList.contains('active');
         
@@ -145,6 +146,9 @@ document.addEventListener('click', function(e) {
         // Open clicked item if it wasn't active
         if (!wasActive) {
             faqItem.classList.add('active');
+            console.log('FAQ opened');
+        } else {
+            console.log('FAQ closed');
         }
     }
 });
