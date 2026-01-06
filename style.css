@@ -521,15 +521,26 @@ body {
 }
 
 .faq-answer {
-    max-height: 0;
+    display: none;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
 }
 
 .faq-item.active .faq-answer {
-    max-height: 500px;
+    display: block;
     padding: 0 1.5rem 1.5rem 1.5rem;
     background: #fafafa;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .faq-answer p {
