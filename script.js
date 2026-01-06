@@ -130,13 +130,34 @@ document.querySelectorAll('.service-card, .gallery-item').forEach(el => {
 
 }); // End of DOMContentLoaded
 
-// Add FAQ click handlers using event delegation
+// Add FAQ click handlers using event delegation (robust version)
 document.addEventListener('click', function(e) {
-    const faqQuestion = e.target.closest('.faq-question');
+    console.log('Click detected:', e.target);
+    
+    // Check if click is on or inside a FAQ question
+    let element = e.target;
+    let faqQuestion = null;
+    
+    // Walk up the DOM tree to find .faq-question
+    while (element && element !== document.body) {
+        if (element.classList && element.classList.contains('faq-question')) {
+            faqQuestion = element;
+            break;
+        }
+        element = element.parentElement;
+    }
+    
     if (faqQuestion) {
-        console.log('FAQ question clicked via event delegation');
+        console.log('FAQ question found:', faqQuestion);
         const faqItem = faqQuestion.parentElement;
+        
+        if (!faqItem || !faqItem.classList.contains('faq-item')) {
+            console.error('FAQ item not found or invalid structure');
+            return;
+        }
+        
         const wasActive = faqItem.classList.contains('active');
+        console.log('Was active:', wasActive);
         
         // Close all FAQ items
         document.querySelectorAll('.faq-item').forEach(item => {
@@ -146,9 +167,9 @@ document.addEventListener('click', function(e) {
         // Open clicked item if it wasn't active
         if (!wasActive) {
             faqItem.classList.add('active');
-            console.log('FAQ opened');
+            console.log('FAQ opened successfully');
         } else {
-            console.log('FAQ closed');
+            console.log('FAQ closed (was already active)');
         }
     }
 });
