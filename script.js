@@ -130,49 +130,30 @@ document.querySelectorAll('.service-card, .gallery-item').forEach(el => {
 
 }); // End of DOMContentLoaded
 
-// Add FAQ click handlers using event delegation (robust version)
-document.addEventListener('click', function(e) {
-    console.log('Click detected:', e.target);
+// Simple FAQ toggle - attach after DOM is ready
+setTimeout(function() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    console.log('FAQ questions found:', faqQuestions.length);
     
-    // Check if click is on or inside a FAQ question
-    let element = e.target;
-    let faqQuestion = null;
-    
-    // Walk up the DOM tree to find .faq-question
-    while (element && element !== document.body) {
-        if (element.classList && element.classList.contains('faq-question')) {
-            faqQuestion = element;
-            break;
-        }
-        element = element.parentElement;
-    }
-    
-    if (faqQuestion) {
-        console.log('FAQ question found:', faqQuestion);
-        const faqItem = faqQuestion.parentElement;
-        
-        if (!faqItem || !faqItem.classList.contains('faq-item')) {
-            console.error('FAQ item not found or invalid structure');
-            return;
-        }
-        
-        const wasActive = faqItem.classList.contains('active');
-        console.log('Was active:', wasActive);
-        
-        // Close all FAQ items
-        document.querySelectorAll('.faq-item').forEach(item => {
-            item.classList.remove('active');
+    faqQuestions.forEach(function(question) {
+        question.addEventListener('click', function() {
+            console.log('FAQ clicked!');
+            const faqItem = this.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(function(item) {
+                item.classList.remove('active');
+            });
+            
+            // Open this one if it wasn't active
+            if (!isActive) {
+                faqItem.classList.add('active');
+                console.log('Opened FAQ');
+            }
         });
-        
-        // Open clicked item if it wasn't active
-        if (!wasActive) {
-            faqItem.classList.add('active');
-            console.log('FAQ opened successfully');
-        } else {
-            console.log('FAQ closed (was already active)');
-        }
-    }
-});
+    });
+}, 100);
 
 // Global functions for inline onclick handlers
 // Show specific service category
