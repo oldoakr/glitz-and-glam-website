@@ -130,30 +130,55 @@ document.querySelectorAll('.service-card, .gallery-item').forEach(el => {
 
 }); // End of DOMContentLoaded
 
-// Simple FAQ toggle - attach after DOM is ready
-setTimeout(function() {
-    const faqQuestions = document.querySelectorAll('.faq-question');
-    console.log('FAQ questions found:', faqQuestions.length);
+// FAQ Toggle - Wait for page to fully load
+window.addEventListener('load', function() {
+    console.log('Page loaded, setting up FAQ');
     
-    faqQuestions.forEach(function(question) {
-        question.addEventListener('click', function() {
-            console.log('FAQ clicked!');
-            const faqItem = this.parentElement;
-            const isActive = faqItem.classList.contains('active');
+    // Get all FAQ questions
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    console.log('Found ' + faqQuestions.length + ' FAQ questions');
+    
+    if (faqQuestions.length === 0) {
+        console.error('No FAQ questions found!');
+        return;
+    }
+    
+    // Add click handler to each question
+    faqQuestions.forEach(function(question, index) {
+        console.log('Adding listener to FAQ ' + index);
+        
+        question.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             
-            // Close all
-            document.querySelectorAll('.faq-item').forEach(function(item) {
+            console.log('FAQ question clicked: ' + index);
+            
+            const faqItem = this.parentElement;
+            console.log('Parent element:', faqItem.className);
+            
+            // Check if this FAQ is currently active
+            const isCurrentlyActive = faqItem.classList.contains('active');
+            console.log('Is active before toggle:', isCurrentlyActive);
+            
+            // Close all FAQ items
+            const allFaqItems = document.querySelectorAll('.faq-item');
+            allFaqItems.forEach(function(item) {
                 item.classList.remove('active');
             });
+            console.log('Closed all FAQs');
             
-            // Open this one if it wasn't active
-            if (!isActive) {
+            // If this FAQ wasn't active, open it
+            if (!isCurrentlyActive) {
                 faqItem.classList.add('active');
-                console.log('Opened FAQ');
+                console.log('Opened FAQ ' + index);
+            } else {
+                console.log('Closed FAQ ' + index);
             }
         });
     });
-}, 100);
+    
+    console.log('FAQ setup complete!');
+});
 
 // Global functions for inline onclick handlers
 // Show specific service category
