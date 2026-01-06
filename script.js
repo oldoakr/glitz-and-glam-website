@@ -130,55 +130,41 @@ document.querySelectorAll('.service-card, .gallery-item').forEach(el => {
 
 }); // End of DOMContentLoaded
 
-// FAQ Toggle - Wait for page to fully load
-window.addEventListener('load', function() {
-    console.log('Page loaded, setting up FAQ');
-    
-    // Get all FAQ questions
-    const faqQuestions = document.querySelectorAll('.faq-question');
-    console.log('Found ' + faqQuestions.length + ' FAQ questions');
-    
-    if (faqQuestions.length === 0) {
-        console.error('No FAQ questions found!');
-        return;
-    }
-    
-    // Add click handler to each question
-    faqQuestions.forEach(function(question, index) {
-        console.log('Adding listener to FAQ ' + index);
+// Immediate FAQ setup - run as soon as script loads (script is at bottom of HTML)
+(function() {
+    // Wait a tiny bit for rendering
+    setTimeout(function() {
+        var questions = document.querySelectorAll('.faq-question');
         
-        question.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            console.log('FAQ question clicked: ' + index);
-            
-            const faqItem = this.parentElement;
-            console.log('Parent element:', faqItem.className);
-            
-            // Check if this FAQ is currently active
-            const isCurrentlyActive = faqItem.classList.contains('active');
-            console.log('Is active before toggle:', isCurrentlyActive);
-            
-            // Close all FAQ items
-            const allFaqItems = document.querySelectorAll('.faq-item');
-            allFaqItems.forEach(function(item) {
-                item.classList.remove('active');
-            });
-            console.log('Closed all FAQs');
-            
-            // If this FAQ wasn't active, open it
-            if (!isCurrentlyActive) {
-                faqItem.classList.add('active');
-                console.log('Opened FAQ ' + index);
-            } else {
-                console.log('Closed FAQ ' + index);
-            }
-        });
-    });
-    
-    console.log('FAQ setup complete!');
-});
+        for (var i = 0; i < questions.length; i++) {
+            questions[i].onclick = function() {
+                var item = this.parentElement;
+                var answer = item.querySelector('.faq-answer');
+                
+                // Close all others
+                var allItems = document.querySelectorAll('.faq-item');
+                for (var j = 0; j < allItems.length; j++) {
+                    if (allItems[j] !== item) {
+                        allItems[j].classList.remove('active');
+                        var otherAnswer = allItems[j].querySelector('.faq-answer');
+                        if (otherAnswer) {
+                            otherAnswer.style.display = 'none';
+                        }
+                    }
+                }
+                
+                // Toggle this one
+                if (item.classList.contains('active')) {
+                    item.classList.remove('active');
+                    answer.style.display = 'none';
+                } else {
+                    item.classList.add('active');
+                    answer.style.display = 'block';
+                }
+            };
+        }
+    }, 50);
+})();
 
 // Global functions for inline onclick handlers
 // Show specific service category
