@@ -130,6 +130,25 @@ document.querySelectorAll('.service-card, .gallery-item').forEach(el => {
 
 }); // End of DOMContentLoaded
 
+// Add FAQ click handlers using event delegation
+document.addEventListener('click', function(e) {
+    const faqQuestion = e.target.closest('.faq-question');
+    if (faqQuestion) {
+        const faqItem = faqQuestion.parentElement;
+        const wasActive = faqItem.classList.contains('active');
+        
+        // Close all FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        // Open clicked item if it wasn't active
+        if (!wasActive) {
+            faqItem.classList.add('active');
+        }
+    }
+});
+
 // Global functions for inline onclick handlers
 // Show specific service category
 function showCategory(categoryId) {
@@ -160,7 +179,7 @@ I would like to book this service. Please confirm availability.
     window.open(whatsappURL, '_blank');
 }
 
-// Toggle FAQ
+// Toggle FAQ (keeping for backward compatibility)
 function toggleFAQ(element) {
     console.log('FAQ clicked', element);
     const faqItem = element.parentElement;
