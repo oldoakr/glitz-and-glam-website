@@ -132,37 +132,63 @@ document.querySelectorAll('.service-card, .gallery-item').forEach(el => {
 
 // Immediate FAQ setup - run as soon as script loads (script is at bottom of HTML)
 (function() {
+    console.log('FAQ script starting...');
+    
     // Wait a tiny bit for rendering
     setTimeout(function() {
         var questions = document.querySelectorAll('.faq-question');
+        console.log('Found FAQ questions:', questions.length);
+        
+        if (questions.length === 0) {
+            console.error('ERROR: No FAQ questions found!');
+            return;
+        }
         
         for (var i = 0; i < questions.length; i++) {
-            questions[i].onclick = function() {
-                var item = this.parentElement;
-                var answer = item.querySelector('.faq-answer');
+            (function(index) {
+                var question = questions[index];
+                console.log('Setting up FAQ', index);
                 
-                // Close all others
-                var allItems = document.querySelectorAll('.faq-item');
-                for (var j = 0; j < allItems.length; j++) {
-                    if (allItems[j] !== item) {
-                        allItems[j].classList.remove('active');
-                        var otherAnswer = allItems[j].querySelector('.faq-answer');
-                        if (otherAnswer) {
-                            otherAnswer.style.display = 'none';
+                question.onclick = function(e) {
+                    console.log('FAQ clicked:', index);
+                    
+                    var item = this.parentElement;
+                    var answer = item.querySelector('.faq-answer');
+                    
+                    if (!answer) {
+                        console.error('No answer found for FAQ', index);
+                        return;
+                    }
+                    
+                    // Close all others
+                    var allItems = document.querySelectorAll('.faq-item');
+                    for (var j = 0; j < allItems.length; j++) {
+                        if (allItems[j] !== item) {
+                            allItems[j].classList.remove('active');
+                            var otherAnswer = allItems[j].querySelector('.faq-answer');
+                            if (otherAnswer) {
+                                otherAnswer.style.display = 'none';
+                            }
                         }
                     }
-                }
-                
-                // Toggle this one
-                if (item.classList.contains('active')) {
-                    item.classList.remove('active');
-                    answer.style.display = 'none';
-                } else {
-                    item.classList.add('active');
-                    answer.style.display = 'block';
-                }
-            };
+                    
+                    // Toggle this one
+                    if (item.classList.contains('active')) {
+                        item.classList.remove('active');
+                        answer.style.display = 'none';
+                        console.log('Closed FAQ', index);
+                    } else {
+                        item.classList.add('active');
+                        answer.style.display = 'block';
+                        answer.style.padding = '1.5rem';
+                        answer.style.background = '#fafafa';
+                        console.log('Opened FAQ', index);
+                    }
+                };
+            })(i);
         }
+        
+        console.log('FAQ setup complete!');
     }, 50);
 })();
 
