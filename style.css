@@ -521,15 +521,14 @@ body {
 }
 
 .faq-answer {
-    display: none !important;
-    overflow: hidden;
+    display: none;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-top: 1px solid #e0e0e0;
 }
 
 .faq-item.active .faq-answer {
-    display: block !important;
-    padding: 0 1.5rem 1.5rem 1.5rem;
-    background: #fafafa;
-    animation: slideDown 0.3s ease-out;
+    display: block;
 }
 
 @keyframes slideDown {
