@@ -50,46 +50,112 @@ if (dateInput) {
 // Booking Form Submission
 const bookingForm = document.getElementById('bookingForm');
 if (bookingForm) {
+    // Set minimum date to today
+    const dateInput = document.getElementById('date');
+    if (dateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+    }
+    
     bookingForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
+        // Validate phone number
+        const phoneInput = document.getElementById('phone');
+        const phoneValue = phoneInput.value.replace(/\D/g, '');
+        
+        if (phoneValue.length !== 10) {
+            alert('⚠️ Please enter a valid 10-digit phone number');
+            phoneInput.focus();
+            return;
+        }
+        
         // Get form data
         const formData = {
-            name: document.getElementById('name').value,
-            phone: document.getElementById('phone').value,
-            email: document.getElementById('email').value,
+            name: document.getElementById('name').value.trim(),
+            phone: phoneValue,
+            email: document.getElementById('email').value.trim(),
             service: document.getElementById('service').value,
             date: document.getElementById('date').value,
             time: document.getElementById('time').value,
-            message: document.getElementById('message').value
+            message: document.getElementById('message') ? document.getElementById('message').value.trim() : ''
         };
         
-        // Create WhatsApp message
+        // Validate date is not in the past
+        const selectedDate = new Date(formData.date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        if (selectedDate < today) {
+            alert('⚠️ Please select a future date for your appointment');
+            dateInput.focus();
+            return;
+        }
+        
+        // Format date nicely
+        const dateObj = new Date(formData.date);
+        const formattedDate = dateObj.toLocaleDateString('en-IN', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+        
+        // Create professional WhatsApp message
         const whatsappMessage = `
-*New Booking Request - Glitz & Glam*
+*✨ NEW APPOINTMENT REQUEST ✨*
+*Glitz & Glam Beauty Parlour*
+━━━━━━━━━━━━━━━━━━━━
 
-👤 Name: ${formData.name}
-📱 Phone: ${formData.phone}
-📧 Email: ${formData.email || 'Not provided'}
-💇 Service: ${formData.service}
-📅 Date: ${formData.date}
-⏰ Time: ${formData.time}
-💬 Special Requests: ${formData.message || 'None'}
+👤 *Customer Details:*
+Name: ${formData.name}
+Phone: +91 ${formData.phone}
+Email: ${formData.email || 'Not provided'}
+
+💅 *Service Requested:*
+${formData.service}
+
+📅 *Appointment Schedule:*
+Date: ${formattedDate}
+Time: ${formData.time}
+
+${formData.message ? `💬 *Special Requests:*\n${formData.message}\n` : ''}
+━━━━━━━━━━━━━━━━━━━━
+
+_Please confirm this appointment at your earliest convenience._
         `.trim();
         
-        // WhatsApp number (use your parlour's WhatsApp number)
-        const whatsappNumber = '918088490262'; // Add country code
+        // WhatsApp number
+        const whatsappNumber = '918088490262';
         const encodedMessage = encodeURIComponent(whatsappMessage);
         const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
         
-        // Open WhatsApp
-        window.open(whatsappURL, '_blank');
+        // Show professional confirmation with details
+        const confirmMessage = `
+📋 BOOKING SUMMARY
+━━━━━━━━━━━━━━━━
+
+Service: ${formData.service}
+Date: ${formattedDate}
+Time: ${formData.time}
+
+✅ Click OK to send your booking request via WhatsApp.
+
+We'll confirm your appointment shortly!
+        `.trim();
         
-        // Show success message
-        alert('Thank you! Your booking request will be sent via WhatsApp. We will confirm your appointment shortly!');
-        
-        // Reset form
-        bookingForm.reset();
+        if (confirm(confirmMessage)) {
+            // Open WhatsApp
+            window.open(whatsappURL, '_blank');
+            
+            // Show success message
+            setTimeout(() => {
+                alert('🎉 Thank you for choosing Glitz & Glam!\n\nYour booking request has been sent via WhatsApp.\n\nWe will confirm your appointment within 15 minutes.\n\nFor urgent bookings, please call: 8088490262');
+            }, 500);
+            
+            // Reset form
+            bookingForm.reset();
+        }
     });
 }
 

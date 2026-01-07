@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Appointment Form - Glitz & Glam</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        .preview {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+        .preview h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .preview pre {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+        .info strong {
+            color: #1976d2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Test Appointment Form</h1>
+        <p class="subtitle">Fill the form below to see how it works</p>
+        
+        <div class="info">
+            <strong>ℹ️ How it works:</strong><br>
+            When you click "Book Appointment", it will show you the WhatsApp message that will be sent to your salon number (8088490262).
+        </div>
+
+        <form id="testBookingForm">
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email (optional)">
+            </div>
+
+            <div class="form-group">
+                <label for="service">Select Service *</label>
+                <select id="service" name="service" required>
+                    <option value="">Choose a service</option>
+                    <option value="Haircut">Haircut</option>
+                    <option value="Facial">Facial</option>
+                    <option value="Makeup">Makeup</option>
+                    <option value="Waxing">Waxing</option>
+                    <option value="Threading">Threading</option>
+                    <option value="Spa">Spa</option>
+                    <option value="Manicure/Pedicure">Manicure/Pedicure</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Preferred Date *</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="time">Preferred Time *</label>
+                <select id="time" name="time" required>
+                    <option value="">Choose a time</option>
+                    <option value="10:30 AM">10:30 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Special Requests (Optional)</label>
+                <textarea id="message" name="message" placeholder="Any special requests or preferences?"></textarea>
+            </div>
+
+            <button type="submit">📅 Book Appointment</button>
+        </form>
+
+        <div class="preview" id="preview">
+            <h3>📩 WhatsApp Message Preview:</h3>
+            <pre id="messagePreview"></pre>
+            <button onclick="sendToWhatsApp()" style="background: #25D366; margin-top: 15px;">
+                ✅ Send via WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentWhatsAppURL = '';
+
+        document.getElementById('testBookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                service: document.getElementById('service').value,
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Create WhatsApp message
+            const whatsappMessage = `*New Booking Request - Glitz & Glam*
+
+👤 Name: ${formData.name}
+📱 Phone: ${formData.phone}
+📧 Email: ${formData.email || 'Not provided'}
+💇 Service: ${formData.service}
+📅 Date: ${formData.date}
+⏰ Time: ${formData.time}
+💬 Special Requests: ${formData.message || 'None'}`;
+            
+            // WhatsApp number
+            const whatsappNumber = '918088490262';
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            currentWhatsAppURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            // Show preview
+            document.getElementById('messagePreview').textContent = whatsappMessage;
+            document.getElementById('preview').style.display = 'block';
+            
+            // Scroll to preview
+            document.getElementById('preview').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        function sendToWhatsApp() {
+            if (currentWhatsAppURL) {
+                window.open(currentWhatsAppURL, '_blank');
+                alert('✅ Opening WhatsApp! The message is ready to send.');
+            }
+        }
+    </script>
+</body>
+</html>

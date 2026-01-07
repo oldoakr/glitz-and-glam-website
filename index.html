@@ -644,28 +644,42 @@
                 <form class="booking-form" id="bookingForm">
                     <div class="form-group">
                         <label for="name">Full Name *</label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" id="name" name="name" placeholder="Enter your full name" minlength="2" required>
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone Number *</label>
-                        <input type="tel" id="phone" name="phone" required>
+                        <input type="tel" id="phone" name="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email">
+                        <input type="email" id="email" name="email" placeholder="your.email@example.com (optional)">
                     </div>
                     <div class="form-group">
                         <label for="service">Select Service *</label>
                         <select id="service" name="service" required>
                             <option value="">Choose a service</option>
-                            <option value="haircut">Haircut</option>
-                            <option value="facial">Facial</option>
-                            <option value="makeup">Makeup</option>
-                            <option value="waxing">Waxing</option>
-                            <option value="threading">Threading</option>
-                            <option value="spa">Spa</option>
-                            <option value="manicure">Manicure/Pedicure</option>
-                            <option value="other">Other</option>
+                            <option value="Full Body Waxing">Full Body Waxing - ₹1200</option>
+                            <option value="Half Body Waxing">Half Body Waxing - ₹600</option>
+                            <option value="Arms & Legs Waxing">Arms & Legs Waxing - ₹500</option>
+                            <option value="Face Waxing">Face Waxing - ₹150</option>
+                            <option value="Korean Glass Facial">Korean Glass Facial - ₹1500</option>
+                            <option value="Gold Facial">Gold Facial - ₹1200</option>
+                            <option value="Pearl Facial">Pearl Facial - ₹800</option>
+                            <option value="Organic Cleanup">Organic Cleanup - ₹500</option>
+                            <option value="Party Makeup">Party Makeup - ₹2500</option>
+                            <option value="Bridal Makeup">Bridal Makeup - ₹8000+</option>
+                            <option value="Engagement Makeup">Engagement Makeup - ₹5000</option>
+                            <option value="Manicure">Manicure - ₹400</option>
+                            <option value="Pedicure">Pedicure - ₹500</option>
+                            <option value="Manicure & Pedicure">Manicure & Pedicure - ₹850</option>
+                            <option value="Eyebrow Threading">Eyebrow Threading - ₹50</option>
+                            <option value="Upper Lip Threading">Upper Lip Threading - ₹30</option>
+                            <option value="Full Face Threading">Full Face Threading - ₹150</option>
+                            <option value="Detan Service">Detan Service - ₹400</option>
+                            <option value="Bleach Service">Bleach Service - ₹350</option>
+                            <option value="Head Massage">Head Massage - ₹300</option>
+                            <option value="Bridal Package">Bridal Package - Contact for details</option>
+                            <option value="Other">Other Service</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -698,10 +712,16 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="message">Special Requests</label>
-                        <textarea id="message" name="message" rows="4"></textarea>
+                        <label for="message">Special Requests (Optional)</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Any special requirements, preferences, or questions?"></textarea>
                     </div>
-                    <button type="submit" class="submit-button">Book Appointment</button>
+                    <button type="submit" class="submit-button" id="submitBtn">
+                        <span class="btn-text">📅 Book Appointment</span>
+                        <span class="btn-loading" style="display: none;">⏳ Processing...</span>
+                    </button>
+                    <p style="text-align: center; margin-top: 15px; color: #666; font-size: 0.9rem;">
+                        💚 Booking via WhatsApp • ⚡ Quick Response Guaranteed
+                    </p>
                 </form>
             </div>
         </div>
