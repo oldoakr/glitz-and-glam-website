@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Booking Demo - Glitz & Glam</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+        .badge {
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .info-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .info-box li {
+            padding: 8px 0;
+            color: #555;
+            font-size: 14px;
+        }
+        .info-box li:before {
+            content: "✅ ";
+            margin-right: 8px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .required {
+            color: #e74c3c;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        input::placeholder, textarea::placeholder {
+            color: #999;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .submit-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        .submit-button:active {
+            transform: translateY(0);
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        .preview-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            display: none;
+        }
+        .preview-section h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        .message-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #25D366;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .action-buttons button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+        }
+        .whatsapp-btn:hover {
+            background: #1ea952;
+            transform: translateY(-2px);
+        }
+        .back-btn {
+            background: #e0e0e0;
+            color: #333;
+        }
+        .back-btn:hover {
+            background: #d0d0d0;
+        }
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 5px solid #28a745;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ Professional Booking System</h1>
+            <p>Glitz & Glam Beauty Parlour</p>
+            <span class="badge">📱 WhatsApp Booking</span>
+        </div>
+
+        <div class="info-box">
+            <h3>🎯 Professional Features:</h3>
+            <ul>
+                <li>Phone number validation (must be 10 digits)</li>
+                <li>Can't select past dates</li>
+                <li>All services listed with prices</li>
+                <li>Beautiful formatted WhatsApp message</li>
+                <li>Booking summary before sending</li>
+                <li>Professional confirmation messages</li>
+            </ul>
+        </div>
+
+        <form id="professionalBookingForm">
+            <div class="form-group">
+                <label for="name">Full Name <span class="required">*</span></label>
+                <input type="text" id="name" placeholder="Enter your full name" minlength="2" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number <span class="required">*</span></label>
+                <input type="tel" id="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="your.email@example.com (optional)">
+            </div>
+
+            <div class="form-group">
+                <label for="service">Select Service <span class="required">*</span></label>
+                <select id="service" required>
+                    <option value="">Choose a service</option>
+                    <option value="Full Body Waxing - ₹1200">Full Body Waxing - ₹1200</option>
+                    <option value="Half Body Waxing - ₹600">Half Body Waxing - ₹600</option>
+                    <option value="Korean Glass Facial - ₹1500">Korean Glass Facial - ₹1500</option>
+                    <option value="Gold Facial - ₹1200">Gold Facial - ₹1200</option>
+                    <option value="Party Makeup - ₹2500">Party Makeup - ₹2500</option>
+                    <option value="Bridal Makeup - ₹8000+">Bridal Makeup - ₹8000+</option>
+                    <option value="Manicure & Pedicure - ₹850">Manicure & Pedicure - ₹850</option>
+                    <option value="Eyebrow Threading - ₹50">Eyebrow Threading - ₹50</option>
+                    <option value="Detan Service - ₹400">Detan Service - ₹400</option>
+                    <option value="Head Massage - ₹300">Head Massage - ₹300</option>
+                    <option value="Other Service">Other Service</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Preferred Date <span class="required">*</span></label>
+                <input type="date" id="date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="time">Preferred Time <span class="required">*</span></label>
+                <select id="time" required>
+                    <option value="">Choose a time</option>
+                    <option value="10:30 AM">10:30 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Special Requests (Optional)</label>
+                <textarea id="message" placeholder="Any special requirements, preferences, or questions?"></textarea>
+            </div>
+
+            <button type="submit" class="submit-button">
+                📅 Book Appointment
+            </button>
+
+            <p class="footer-note">
+                💚 Booking via WhatsApp • ⚡ Quick Response Guaranteed
+            </p>
+        </form>
+
+        <div class="preview-section" id="previewSection">
+            <h3>📋 Booking Summary</h3>
+            <div class="message-preview" id="messagePreview"></div>
+            <div class="action-buttons">
+                <button class="whatsapp-btn" onclick="sendToWhatsApp()">
+                    ✅ Send via WhatsApp
+                </button>
+                <button class="back-btn" onclick="goBack()">
+                    ← Edit Details
+                </button>
+            </div>
+            <div class="success-message" id="successMessage">
+                🎉 <strong>Success!</strong> Opening WhatsApp now. We'll confirm your appointment within 15 minutes!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentWhatsAppURL = '';
+        let formDataGlobal = {};
+
+        // Set minimum date to today
+        const dateInput = document.getElementById('date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+
+        document.getElementById('professionalBookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate phone number
+            const phoneInput = document.getElementById('phone');
+            const phoneValue = phoneInput.value.replace(/\D/g, '');
+            
+            if (phoneValue.length !== 10) {
+                alert('⚠️ Please enter a valid 10-digit phone number');
+                phoneInput.focus();
+                return;
+            }
+            
+            // Get form data
+            formDataGlobal = {
+                name: document.getElementById('name').value.trim(),
+                phone: phoneValue,
+                email: document.getElementById('email').value.trim(),
+                service: document.getElementById('service').value,
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value,
+                message: document.getElementById('message').value.trim()
+            };
+            
+            // Validate date is not in the past
+            const selectedDate = new Date(formDataGlobal.date);
+            const todayDate = new Date();
+            todayDate.setHours(0, 0, 0, 0);
+            
+            if (selectedDate < todayDate) {
+                alert('⚠️ Please select a future date for your appointment');
+                dateInput.focus();
+                return;
+            }
+            
+            // Format date nicely
+            const dateObj = new Date(formDataGlobal.date);
+            const formattedDate = dateObj.toLocaleDateString('en-IN', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            // Create professional WhatsApp message
+            const whatsappMessage = `*✨ NEW APPOINTMENT REQUEST ✨*
+*Glitz & Glam Beauty Parlour*
+━━━━━━━━━━━━━━━━━━━━
+
+👤 *Customer Details:*
+Name: ${formDataGlobal.name}
+Phone: +91 ${formDataGlobal.phone}
+Email: ${formDataGlobal.email || 'Not provided'}
+
+💅 *Service Requested:*
+${formDataGlobal.service}
+
+📅 *Appointment Schedule:*
+Date: ${formattedDate}
+Time: ${formDataGlobal.time}
+
+${formDataGlobal.message ? `💬 *Special Requests:*\n${formDataGlobal.message}\n` : ''}━━━━━━━━━━━━━━━━━━━━
+
+_Please confirm this appointment at your earliest convenience._`;
+            
+            // WhatsApp number
+            const whatsappNumber = '918088490262';
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            currentWhatsAppURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            // Show preview
+            document.getElementById('messagePreview').textContent = whatsappMessage;
+            document.getElementById('professionalBookingForm').style.display = 'none';
+            document.getElementById('previewSection').style.display = 'block';
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        function sendToWhatsApp() {
+            if (currentWhatsAppURL) {
+                window.open(currentWhatsAppURL, '_blank');
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Show additional confirmation after 1 second
+                setTimeout(() => {
+                    alert('🎉 Thank you for choosing Glitz & Glam!\n\nYour booking request has been sent via WhatsApp.\n\nWe will confirm your appointment within 15 minutes.\n\nFor urgent bookings, please call: 8088490262');
+                }, 1000);
+            }
+        }
+
+        function goBack() {
+            document.getElementById('professionalBookingForm').style.display = 'block';
+            document.getElementById('previewSection').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

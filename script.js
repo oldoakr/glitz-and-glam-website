@@ -47,7 +47,7 @@ if (dateInput) {
     dateInput.setAttribute('min', today);
 }
 
-// Booking Form Submission
+// Booking Form Submission with Real-Time Slot Checking
 const bookingForm = document.getElementById('bookingForm');
 if (bookingForm) {
     // Set minimum date to today
@@ -55,9 +55,17 @@ if (bookingForm) {
     if (dateInput) {
         const today = new Date().toISOString().split('T')[0];
         dateInput.setAttribute('min', today);
+        
+        // Check availability when date changes
+        dateInput.addEventListener('change', async function() {
+            const selectedDate = this.value;
+            if (selectedDate) {
+                await updateTimeSlotAvailability(selectedDate);
+            }
+        });
     }
     
-    bookingForm.addEventListener('submit', function(e) {
+    bookingForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         // Validate phone number
@@ -92,6 +100,20 @@ if (bookingForm) {
             return;
         }
         
+        // Extract price from service
+        const serviceText = document.getElementById('service').selectedOptions[0].text;
+        const priceMatch = serviceText.match(/₹(\d+)/);
+        const price = priceMatch ? priceMatch[1] : 'Contact';
+        
+        // Check if slot is available via Google Sheets
+        const bookedSlots = await checkSlotAvailability(formData.date);
+        const timeValue = document.getElementById('time').selectedOptions[0].text;
+        
+        if (bookedSlots.includes(timeValue)) {
+            alert('⚠️ Sorry! This time slot is already booked.\n\nPlease select another time slot.');
+            return;
+        }
+        
         // Format date nicely
         const dateObj = new Date(formData.date);
         const formattedDate = dateObj.toLocaleDateString('en-IN', { 
@@ -117,7 +139,7 @@ ${formData.service}
 
 📅 *Appointment Schedule:*
 Date: ${formattedDate}
-Time: ${formData.time}
+Time: ${timeValue}
 
 ${formData.message ? `💬 *Special Requests:*\n${formData.message}\n` : ''}
 ━━━━━━━━━━━━━━━━━━━━
@@ -137,26 +159,103 @@ _Please confirm this appointment at your earliest convenience._
 
 Service: ${formData.service}
 Date: ${formattedDate}
-Time: ${formData.time}
+Time: ${timeValue}
 
-✅ Click OK to send your booking request via WhatsApp.
+✅ This slot is AVAILABLE!
 
-We'll confirm your appointment shortly!
+Click OK to confirm your booking via WhatsApp.
         `.trim();
         
         if (confirm(confirmMessage)) {
+            // Save booking to Google Sheets
+            await bookAppointment({
+                name: formData.name,
+                phone: formData.phone,
+                email: formData.email,
+                service: formData.service,
+                price: price,
+                date: formData.date,
+                time: timeValue
+            });
+            
             // Open WhatsApp
             window.open(whatsappURL, '_blank');
             
             // Show success message
             setTimeout(() => {
-                alert('🎉 Thank you for choosing Glitz & Glam!\n\nYour booking request has been sent via WhatsApp.\n\nWe will confirm your appointment within 15 minutes.\n\nFor urgent bookings, please call: 8088490262');
+                alert('🎉 BOOKING CONFIRMED!\n\nYour slot has been secured in our system.\n\nWe will confirm via WhatsApp within 15 minutes.\n\nFor urgent bookings, please call: 8088490262');
             }, 500);
             
             // Reset form
             bookingForm.reset();
         }
     });
+}
+
+// Update time slot availability based on bookings
+async function updateTimeSlotAvailability(date) {
+    const timeSelect = document.getElementById('time');
+    if (!timeSelect) return;
+    
+    // Get booked slots for this date
+    const bookedSlots = await checkSlotAvailability(date);
+    
+    // Update time options to show availability
+    const options = timeSelect.options;
+    for (let i = 1; i < options.length; i++) {
+        const timeText = options[i].text;
+        if (bookedSlots.includes(timeText)) {
+            options[i].text = timeText + ' ❌ Booked';
+            options[i].disabled = true;
+            options[i].style.color = '#999';
+        } else {
+            // Remove any existing status and add available marker
+            const cleanTime = timeText.replace(' ❌ Booked', '').replace(' ✅ Available', '');
+            options[i].text = cleanTime + ' ✅ Available';
+            options[i].disabled = false;
+            options[i].style.color = '#2e7d32';
+        }
+    }
+    
+    // Show notification
+    if (bookedSlots.length > 0) {
+        const notification = document.createElement('div');
+        notification.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #ff9800; color: white; padding: 15px 20px; border-radius: 8px; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.3);';
+        notification.innerHTML = `⚠️ ${bookedSlots.length} slot(s) already booked for this date`;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+    }
+}
+
+// Google Sheets API Functions
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyyvXYznLIM6Mm54woC3P-zKdTCidluTROcBAflUQOIjQtVq1VRNchRaAQLFhJVNVA/exec';
+
+async function checkSlotAvailability(date) {
+    try {
+        const response = await fetch(`${GOOGLE_SCRIPT_URL}?date=${date}`);
+        const data = await response.json();
+        return data.success ? data.bookedSlots : [];
+    } catch (error) {
+        console.error('Error checking availability:', error);
+        return [];
+    }
+}
+
+async function bookAppointment(bookingData) {
+    try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(bookingData)
+        });
+        return { success: true };
+    } catch (error) {
+        console.error('Error booking:', error);
+        return { success: false };
+    }
 }
 
 // Add scroll effect to navbar

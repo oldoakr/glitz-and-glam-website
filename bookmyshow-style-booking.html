@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Booking System - Glitz & Glam</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #999;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .step.active .step-number {
+            background: #667eea;
+            color: white;
+        }
+        .step.completed .step-number {
+            background: #4caf50;
+            color: white;
+        }
+        .step-label {
+            font-size: 13px;
+            color: #666;
+        }
+        .step.active .step-label {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .date-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .date-card {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .date-card:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        .date-card.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        .date-card .day {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .date-card .date {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .date-card .month {
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .time-slot {
+            padding: 15px 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .time-slot.available {
+            border-color: #4caf50;
+            background: #f1f8f4;
+            color: #2e7d32;
+        }
+        .time-slot.available:hover {
+            background: #4caf50;
+            color: white;
+        }
+        .time-slot.booked {
+            border-color: #e0e0e0;
+            background: #f5f5f5;
+            color: #999;
+            cursor: not-allowed;
+        }
+        .time-slot.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        .time-slot .status {
+            font-size: 10px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .service-card {
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .service-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+        .service-card.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        .service-card .service-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .service-card .service-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4caf50;
+        }
+        .service-card.selected .service-price {
+            color: white;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .legend-dot.available {
+            background: #4caf50;
+        }
+        .legend-dot.booked {
+            background: #e0e0e0;
+        }
+        .legend-dot.selected {
+            background: #667eea;
+        }
+
+        .summary-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        .summary-label {
+            color: #666;
+        }
+        .summary-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .button-group .btn {
+            flex: 1;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e0e0e0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .alert-info {
+            background: #e3f2fd;
+            color: #1976d2;
+            border-left: 4px solid #2196f3;
+        }
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Real-Time Booking System</h1>
+            <p>Book like BookMyShow - See live availability</p>
+        </div>
+
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step active" id="step1-indicator">
+                <div class="step-number">1</div>
+                <div class="step-label">Your Details</div>
+            </div>
+            <div class="step" id="step2-indicator">
+                <div class="step-number">2</div>
+                <div class="step-label">Select Service</div>
+            </div>
+            <div class="step" id="step3-indicator">
+                <div class="step-number">3</div>
+                <div class="step-label">Date & Time</div>
+            </div>
+            <div class="step" id="step4-indicator">
+                <div class="step-number">4</div>
+                <div class="step-label">Confirm</div>
+            </div>
+        </div>
+
+        <!-- Step 1: Customer Details -->
+        <div class="section active" id="step1">
+            <h2>👤 Your Details</h2>
+            <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" id="customerName" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number *</label>
+                <input type="tel" id="customerPhone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+            </div>
+            <div class="form-group">
+                <label>Email (Optional)</label>
+                <input type="email" id="customerEmail" placeholder="your.email@example.com">
+            </div>
+            <button class="btn btn-primary" onclick="goToStep(2)">Next: Select Service →</button>
+        </div>
+
+        <!-- Step 2: Select Service -->
+        <div class="section" id="step2">
+            <h2>💅 Select Service</h2>
+            <div class="service-grid" id="serviceGrid">
+                <!-- Services will be loaded here -->
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="goToStep(1)">← Back</button>
+                <button class="btn btn-primary" onclick="goToStep(3)">Next: Date & Time →</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Date & Time -->
+        <div class="section" id="step3">
+            <h2>📅 Select Date</h2>
+            <div class="date-selector" id="dateSelector">
+                <!-- Dates will be loaded here -->
+            </div>
+
+            <h2 style="margin-top: 30px;">⏰ Select Time Slot</h2>
+            <div class="alert alert-info">
+                <strong>Live Availability:</strong> Green slots are available. Grey slots are already booked.
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-dot available"></div>
+                    <span>Available</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot booked"></div>
+                    <span>Booked</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot selected"></div>
+                    <span>Selected</span>
+                </div>
+            </div>
+            <div id="loadingSlots" class="loading" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p>Checking availability...</p>
+            </div>
+            <div class="time-slots" id="timeSlots">
+                <!-- Time slots will be loaded here -->
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="goToStep(2)">← Back</button>
+                <button class="btn btn-primary" onclick="goToStep(4)">Next: Confirm →</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Confirmation -->
+        <div class="section" id="step4">
+            <h2>✅ Confirm Your Booking</h2>
+            <div class="summary-box" id="bookingSummary">
+                <!-- Summary will be shown here -->
+            </div>
+            <div class="alert alert-success">
+                <strong>🎉 Almost Done!</strong> Click "Confirm Booking" to secure your slot via WhatsApp.
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="goToStep(3)">← Back</button>
+                <button class="btn btn-primary" onclick="confirmBooking()">✅ Confirm Booking</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Booking Data
+        let bookingData = {
+            name: '',
+            phone: '',
+            email: '',
+            service: '',
+            servicePrice: '',
+            date: '',
+            dateFormatted: '',
+            time: '',
+            timeSlot: ''
+        };
+
+        // Services List
+        const services = [
+            { name: 'Full Body Waxing', price: 1200 },
+            { name: 'Half Body Waxing', price: 600 },
+            { name: 'Korean Glass Facial', price: 1500 },
+            { name: 'Gold Facial', price: 1200 },
+            { name: 'Party Makeup', price: 2500 },
+            { name: 'Bridal Makeup', price: 8000 },
+            { name: 'Manicure & Pedicure', price: 850 },
+            { name: 'Eyebrow Threading', price: 50 },
+            { name: 'Detan Service', price: 400 },
+            { name: 'Head Massage', price: 300 }
+        ];
+
+        // Time Slots
+        const timeSlots = [
+            '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM',
+            '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM',
+            '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM',
+            '6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM'
+        ];
+
+        // Simulated booked slots (In real system, this comes from database)
+        let bookedSlots = {};
+
+        // Initialize
+        loadServices();
+        loadDates();
+
+        function goToStep(step) {
+            // Validation
+            if (step === 2) {
+                const name = document.getElementById('customerName').value.trim();
+                const phone = document.getElementById('customerPhone').value.trim();
+                if (!name || phone.length !== 10) {
+                    alert('⚠️ Please enter valid name and 10-digit phone number');
+                    return;
+                }
+                bookingData.name = name;
+                bookingData.phone = phone;
+                bookingData.email = document.getElementById('customerEmail').value.trim();
+            }
+
+            if (step === 3 && !bookingData.service) {
+                alert('⚠️ Please select a service');
+                return;
+            }
+
+            if (step === 4 && (!bookingData.date || !bookingData.time)) {
+                alert('⚠️ Please select date and time');
+                return;
+            }
+
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.step').forEach(s => {
+                s.classList.remove('active');
+                s.classList.remove('completed');
+            });
+
+            // Show current section
+            document.getElementById('step' + step).classList.add('active');
+            document.getElementById('step' + step + '-indicator').classList.add('active');
+
+            // Mark completed steps
+            for (let i = 1; i < step; i++) {
+                document.getElementById('step' + i + '-indicator').classList.add('completed');
+            }
+
+            if (step === 4) {
+                showSummary();
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function loadServices() {
+            const grid = document.getElementById('serviceGrid');
+            grid.innerHTML = services.map(service => `
+                <div class="service-card" onclick="selectService('${service.name}', ${service.price})">
+                    <div class="service-name">${service.name}</div>
+                    <div class="service-price">₹${service.price}</div>
+                </div>
+            `).join('');
+        }
+
+        function selectService(name, price) {
+            document.querySelectorAll('.service-card').forEach(card => card.classList.remove('selected'));
+            event.target.closest('.service-card').classList.add('selected');
+            bookingData.service = name;
+            bookingData.servicePrice = price;
+        }
+
+        function loadDates() {
+            const selector = document.getElementById('dateSelector');
+            const today = new Date();
+            let html = '';
+
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(today);
+                date.setDate(date.getDate() + i);
+                const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+                const dateNum = date.getDate();
+                const monthName = date.toLocaleDateString('en-US', { month: 'short' });
+                const fullDate = date.toISOString().split('T')[0];
+
+                html += `
+                    <div class="date-card" onclick="selectDate('${fullDate}', '${dayName}, ${dateNum} ${monthName}')">
+                        <div class="day">${dayName}</div>
+                        <div class="date">${dateNum}</div>
+                        <div class="month">${monthName}</div>
+                    </div>
+                `;
+            }
+            selector.innerHTML = html;
+        }
+
+        function selectDate(date, formatted) {
+            document.querySelectorAll('.date-card').forEach(card => card.classList.remove('selected'));
+            event.target.closest('.date-card').classList.add('selected');
+            bookingData.date = date;
+            bookingData.dateFormatted = formatted;
+            loadTimeSlots(date);
+        }
+
+        function loadTimeSlots(date) {
+            const container = document.getElementById('timeSlots');
+            const loading = document.getElementById('loadingSlots');
+            
+            loading.style.display = 'block';
+            container.innerHTML = '';
+
+            // Simulate API call to check availability
+            setTimeout(() => {
+                // Simulate some booked slots (randomly)
+                const bookedSlotsForDate = bookedSlots[date] || [];
+                if (!bookedSlots[date]) {
+                    // Randomly book some slots for demo
+                    bookedSlots[date] = [];
+                    timeSlots.forEach((slot, index) => {
+                        if (Math.random() > 0.7) { // 30% chance of being booked
+                            bookedSlots[date].push(slot);
+                        }
+                    });
+                }
+
+                const html = timeSlots.map(slot => {
+                    const isBooked = bookedSlots[date].includes(slot);
+                    return `
+                        <div class="time-slot ${isBooked ? 'booked' : 'available'}" 
+                             onclick="${isBooked ? '' : `selectTime('${slot}')`}">
+                            <div>${slot}</div>
+                            <span class="status">${isBooked ? '❌ Booked' : '✅ Available'}</span>
+                        </div>
+                    `;
+                }).join('');
+
+                container.innerHTML = html;
+                loading.style.display = 'none';
+            }, 1000);
+        }
+
+        function selectTime(time) {
+            document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
+            event.target.closest('.time-slot').classList.add('selected');
+            bookingData.time = time;
+        }
+
+        function showSummary() {
+            const summary = document.getElementById('bookingSummary');
+            summary.innerHTML = `
+                <div class="summary-item">
+                    <span class="summary-label">👤 Name:</span>
+                    <span class="summary-value">${bookingData.name}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">📱 Phone:</span>
+                    <span class="summary-value">+91 ${bookingData.phone}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">💅 Service:</span>
+                    <span class="summary-value">${bookingData.service}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">💰 Price:</span>
+                    <span class="summary-value">₹${bookingData.servicePrice}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">📅 Date:</span>
+                    <span class="summary-value">${bookingData.dateFormatted}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">⏰ Time:</span>
+                    <span class="summary-value">${bookingData.time}</span>
+                </div>
+            `;
+        }
+
+        function confirmBooking() {
+            // Mark slot as booked
+            if (!bookedSlots[bookingData.date]) {
+                bookedSlots[bookingData.date] = [];
+            }
+            bookedSlots[bookingData.date].push(bookingData.time);
+
+            // Create WhatsApp message
+            const message = `*✨ CONFIRMED BOOKING ✨*
+*Glitz & Glam Beauty Parlour*
+━━━━━━━━━━━━━━━━━━━━
+
+✅ *BOOKING CONFIRMED*
+
+👤 Name: ${bookingData.name}
+📱 Phone: +91 ${bookingData.phone}
+${bookingData.email ? `📧 Email: ${bookingData.email}\n` : ''}
+💅 Service: ${bookingData.service}
+💰 Amount: ₹${bookingData.servicePrice}
+
+📅 Date: ${bookingData.dateFormatted}
+⏰ Time: ${bookingData.time}
+
+━━━━━━━━━━━━━━━━━━━━
+
+🎉 Your slot is CONFIRMED!
+We're excited to serve you.
+
+📍 Location: Shop no 7, Amba Bhavani Temple Rd
+📞 Contact: 8088490262`;
+
+            const whatsappNumber = '918088490262';
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+            // Open WhatsApp
+            window.open(whatsappURL, '_blank');
+
+            // Show success
+            alert(`🎉 BOOKING CONFIRMED!\n\n${bookingData.service}\n${bookingData.dateFormatted} at ${bookingData.time}\n\nYour slot is secured! Check WhatsApp for confirmation.`);
+
+            // Reset (in real system, would redirect to thank you page)
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
